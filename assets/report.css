@@ -1,0 +1,294 @@
+/*
+ * PytestPython HTML report theme.
+ * Applied with: --css=assets/report.css (embedded into the report with --self-contained-html)
+ *
+ * Palette
+ *   ink      #1F2A44   headings, text
+ *   slate    #5B6782   secondary text
+ *   rule     #D9DEE5   borders, empty chart
+ *   paper    #F6F8FA   page background
+ *   passed   #2E8B57   failed  #C8372D   error  #7A4FBF   skipped  #C9A227
+ */
+
+:root {
+    --pp-ink: #1F2A44;
+    --pp-slate: #5B6782;
+    --pp-rule: #D9DEE5;
+    --pp-paper: #F6F8FA;
+    --pp-white: #FFFFFF;
+    --pp-passed: #2E8B57;
+    --pp-failed: #C8372D;
+    --pp-error: #7A4FBF;
+    --pp-skipped: #C9A227;
+    --pp-font: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ---------- Page ---------- */
+
+body {
+    font-family: var(--pp-font);
+    color: var(--pp-ink);
+    background: var(--pp-paper);
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 32px 24px 64px;
+    line-height: 1.5;
+    font-variant-numeric: tabular-nums;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+}
+
+h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 32px 0 12px;
+}
+
+a {
+    color: var(--pp-ink);
+}
+
+:focus-visible {
+    outline: 2px solid var(--pp-ink);
+    outline-offset: 2px;
+}
+
+/* ---------- Verdict panel (the one bold element) ---------- */
+
+.pp-verdict {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin: 24px 0 8px;
+    padding: 28px 32px;
+    background: var(--pp-white);
+    border: 1px solid var(--pp-rule);
+    border-left: 8px solid var(--pp-passed);
+    border-radius: 4px;
+}
+
+.pp-verdict.pp-state-fail {
+    border-left-color: var(--pp-failed);
+}
+
+.pp-donut {
+    position: relative;
+    flex: 0 0 auto;
+    width: 168px;
+    height: 168px;
+    border-radius: 50%;
+}
+
+.pp-donut-hole {
+    position: absolute;
+    inset: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--pp-white);
+    border-radius: 50%;
+}
+
+.pp-rate {
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.pp-rate-label {
+    font-size: 13px;
+    color: var(--pp-slate);
+    margin-top: 4px;
+}
+
+.pp-verdict-body {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.pp-verdict-text {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    margin: 0;
+}
+
+.pp-state-fail .pp-verdict-text {
+    color: var(--pp-failed);
+}
+
+.pp-run-meta {
+    color: var(--pp-slate);
+    margin: 6px 0 20px;
+}
+
+.pp-legend {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 520px;
+}
+
+.pp-legend-row {
+    display: grid;
+    grid-template-columns: 12px 72px 40px 1fr 44px;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 0;
+    border-top: 1px solid var(--pp-rule);
+}
+
+.pp-legend-row:first-child {
+    border-top: none;
+}
+
+.pp-swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.pp-legend-count {
+    font-weight: 600;
+    text-align: right;
+}
+
+.pp-legend-bar {
+    height: 6px;
+    background: var(--pp-paper);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.pp-legend-bar > span {
+    display: block;
+    height: 100%;
+}
+
+.pp-legend-share {
+    color: var(--pp-slate);
+    text-align: right;
+}
+
+/* ---------- Environment table ---------- */
+
+#environment {
+    border-collapse: collapse;
+    background: var(--pp-white);
+    border: 1px solid var(--pp-rule);
+}
+
+#environment td {
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--pp-rule);
+    vertical-align: top;
+    color: var(--pp-ink);
+    font-size: 14px;
+}
+
+#environment td:first-child {
+    color: var(--pp-ink);
+    font-weight: 600;
+    width: 180px;
+}
+
+/* ---------- Results table ---------- */
+
+#results-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--pp-white);
+    border: 1px solid var(--pp-rule);
+    color: var(--pp-ink);           /* pytest-html default is light grey #999 */
+    font-size: 14px;
+}
+
+#results-table th {
+    text-align: left;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--pp-white);
+    background: var(--pp-ink);
+    padding: 12px 14px;
+    border: 1px solid var(--pp-ink);
+}
+
+#results-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--pp-rule);
+    vertical-align: top;
+    color: var(--pp-ink);
+}
+
+#results-table tbody:hover td {
+    background: var(--pp-paper);
+}
+
+.pp-col-description {
+    color: var(--pp-ink);
+    max-width: 420px;
+}
+
+#results-table .passed .col-result {
+    color: var(--pp-passed);
+    font-weight: 600;
+}
+
+#results-table .failed .col-result {
+    color: var(--pp-failed);
+    font-weight: 600;
+}
+
+#results-table .error .col-result {
+    color: var(--pp-error);
+    font-weight: 600;
+}
+
+#results-table .skipped .col-result {
+    color: var(--pp-skipped);
+    font-weight: 600;
+}
+
+/* Expanded log and screenshots */
+.log {
+    font-size: 12px;
+    background: var(--pp-paper);
+    border: 1px solid var(--pp-rule);
+    border-radius: 4px;
+    padding: 12px;
+    white-space: pre-wrap;
+}
+
+.extra img,
+.media img {
+    max-width: 100%;
+    border: 1px solid var(--pp-rule);
+    border-radius: 4px;
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 720px) {
+    .pp-verdict {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+        padding: 24px;
+    }
+
+    .pp-verdict-text {
+        font-size: 24px;
+    }
+
+    .pp-legend-row {
+        grid-template-columns: 12px 64px 32px 1fr 40px;
+        gap: 8px;
+    }
+}

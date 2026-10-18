@@ -1,0 +1,8 @@
+{
+  "orders": [
+    {
+      "country": "India",
+      "productOrderedId": "<set at runtime>"
+    }
+  ]
+}
