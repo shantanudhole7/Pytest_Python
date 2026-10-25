@@ -65,3 +65,8 @@ SMTPPASSWORD = os.getenv("SMTPPASSWORD")
 EMAILFROM = os.getenv("EMAILFROM")
 EMAILTO = os.getenv("EMAILTO")
 # endregion Email
+
+# region Report
+REPORTLOGO = _ini.get("report", "logo", fallback="")
+REPORTTABTITLE = _ini.get("report", "tab_title", fallback="")
+# endregion Report

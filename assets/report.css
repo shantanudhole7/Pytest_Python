@@ -43,6 +43,28 @@ h1 {
     margin: 0 0 4px;
 }
 
+/* ---------- Brand (logo + title) ---------- */
+
+.pp-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0 0 4px;
+}
+
+.pp-brand h1 {
+    margin: 0;
+}
+
+.pp-logo {
+    height: 42px;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+    border-radius: 10px;
+    flex: none;
+}
+
 h2 {
     font-size: 18px;
     font-weight: 600;
