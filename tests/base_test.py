@@ -1,5 +1,6 @@
 from playwright.sync_api import expect
 from fixtures.logging_fixture import logger
+from pages.core.radio import Radio
 from utils.Assertions.assertion import Assertion
 
 
@@ -53,6 +54,13 @@ def assert_count(description: str, element, expected: int, timeout: int = 10000)
     Call assert_count method of BaseTest class
     """
     BaseTest().assert_count(description=description, element=element, expected=expected, timeout=timeout)
+
+
+def assert_checked(description: str, element):
+    """
+    Call assert_checked method of BaseTest class
+    """
+    BaseTest().assert_checked(description=description, element=element)
 
 
 class BaseTest(Assertion):
@@ -173,3 +181,24 @@ class BaseTest(Assertion):
             Assertion.logger_error(description, expected, element.locator.count())
             raise
         self.assert_equal(description, expected, element.get_count())
+
+    def assert_checked(self, description, element):
+        """
+        Assert that a checkbox or radio button becomes checked, waiting up to 10 seconds.
+
+        Logs a PASS line through assert_equal when the element is checked,
+        or a FAIL line before re-raising when it is not.
+
+        Args:
+            description: What is being verified, e.g. "Verify chk_radio_1 is checked."
+            element: Core element (Checkbox, ...) whose checked state is verified.
+
+        Raises:
+            AssertionError: If the element is not checked within 10 seconds.
+        """
+        try:
+            expect(element.locator).to_be_checked(timeout=10000)
+        except AssertionError as e:
+            Assertion.logger_error(description, "checked", "not checked")
+            raise e
+        self.assert_equal(description, True, Radio(element).is_checked())
