@@ -22,6 +22,7 @@ PRACTICEURL = _ini.get("url", "practice_url")
 POPUPSPATH = _ini.get("url", "popups_path")
 WINDOWOPERATIONSPATH = _ini.get("url", "window_operations_path")
 IFRAMEPATH = _ini.get("url", "iframe_path")
+WEBFORMURL = _ini.get("url", "web_form_url")
 # endregion URLS
 
 # region API URLS

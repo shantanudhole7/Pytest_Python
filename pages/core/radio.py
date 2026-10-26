@@ -1,7 +1,7 @@
 from playwright.sync_api import Locator
 from pages.core.base_element import BaseElement
 
-class Checkbox(BaseElement):
+class Radio(BaseElement):
     def __init__(self, locator: Locator):
         super().__init__(locator)
         self.locator = locator

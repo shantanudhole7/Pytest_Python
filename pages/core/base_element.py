@@ -63,6 +63,15 @@ class BaseElement:
         except PlaywrightTimeoutError:
             return False
 
+    def is_checked(self) -> bool:
+        """
+        Check whether the element (checkbox or radio button) is checked right now.
+
+        Returns:
+            bool: True if checked, False otherwise.
+        """
+        return self.locator.is_checked()
+
     # -------------------------
     # Information
     # -------------------------
