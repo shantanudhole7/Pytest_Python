@@ -1,5 +1,6 @@
 from playwright.sync_api import expect
 from fixtures.logging_fixture import logger
+from pages.core.base_element import BaseElement
 from pages.core.radio import Radio
 from utils.Assertions.assertion import Assertion
 
@@ -61,6 +62,12 @@ def assert_checked(description: str, element):
     Call assert_checked method of BaseTest class
     """
     BaseTest().assert_checked(description=description, element=element)
+
+def assert_unchecked(description: str, element):
+    """
+    Call assert_unchecked method of BaseTest class
+    """
+    BaseTest().assert_unchecked(description=description, element=element)
 
 
 class BaseTest(Assertion):
@@ -191,7 +198,7 @@ class BaseTest(Assertion):
 
         Args:
             description: What is being verified, e.g. "Verify chk_radio_1 is checked."
-            element: Core element (Checkbox, ...) whose checked state is verified.
+            element: Core element (Checkbox, Radio...) whose checked state is verified.
 
         Raises:
             AssertionError: If the element is not checked within 10 seconds.
@@ -201,4 +208,25 @@ class BaseTest(Assertion):
         except AssertionError as e:
             Assertion.logger_error(description, "checked", "not checked")
             raise e
-        self.assert_equal(description, True, Radio(element).is_checked())
+        self.assert_equal(description, True, BaseElement(element).is_checked())
+
+    def assert_unchecked(self, description, element):
+        """
+        Assert that a checkbox or radio button becomes un-checked, waiting up to 10 seconds.
+
+        Logs a PASS line through assert_equal when the element is un-checked,
+        or a FAIL line before re-raising when it is not.
+
+        Args:
+            description: What is being verified, e.g. "Verify chk_radio_1 is checked."
+            element: Core element (Checkbox, Radio...) whose un-checked state is verified.
+
+        Raises:
+            AssertionError: If the element is not un-checked within 10 seconds.
+        """
+        try:
+            expect(element.locator).not_to_be_checked(timeout=10000)
+        except AssertionError as e:
+            Assertion.logger_error(description, "un-checked", "checked")
+            raise e
+        self.assert_equal(description, False, BaseElement(element).is_checked())

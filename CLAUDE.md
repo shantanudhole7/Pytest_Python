@@ -84,3 +84,5 @@ report code.
 Add one line per decision so future sessions keep it.
 
 - 2026-10-24: Created this CLAUDE.md.
+- 2026-10-27: PracticePage (WEBFORMURL) tests are split per widget (test_radio_page.py / TestRadioPage,
+  test_checkbox_page.py / TestCheckboxPage, ...), an agreed exception to test_<page_name>.py.
