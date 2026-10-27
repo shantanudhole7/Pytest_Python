@@ -8,7 +8,7 @@ class Radio(BaseElement):
 
     def check(self):
         """
-        Check the checkbox element.
+        Check the radio element.
         """
         self.locator.check()
 
