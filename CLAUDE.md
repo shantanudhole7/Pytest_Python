@@ -28,6 +28,8 @@ report code.
   `python -m pip install pytest pytest-playwright python-dotenv pytest-html pytest-metadata reporting-labs` then
   `python -m playwright install`.
 - Run every command from the `PytestPython` folder so `pytest.ini` and `conftest.py` are picked up.
+- Retries: failed tests are retried after the whole run (`[execution] retries` in `config.ini`); `--retries N` for one
+  run, `--retries 0` to turn off
 
 ## Commands
 
@@ -78,6 +80,8 @@ report code.
 - API: `auth` is session-scoped (one login per run). Products from `create_product` are deleted after the test; mark
   `skip_teardown` when the test deletes them itself.
 - A failed report email is only logged as a warning and never fails the run.
+- A failed test is reported as RERUN and retried only after all tests have run, with fresh fixtures (new browser, new
+  API login). Code that depends on test order or shared state must survive a test running again at the end.
 
 ## Decisions log
 
@@ -86,3 +90,5 @@ Add one line per decision so future sessions keep it.
 - 2026-10-24: Created this CLAUDE.md.
 - 2026-10-27: PracticePage (WEBFORMURL) tests are split per widget (test_radio_page.py / TestRadioPage,
   test_checkbox_page.py / TestCheckboxPage, ...), an agreed exception to test_<page_name>.py.
+- 2026-10-28: Failed tests are retried after the whole run, in original order (`fixtures/retry_fixture.py`), not
+  immediately as pytest-rerunfailures does.
