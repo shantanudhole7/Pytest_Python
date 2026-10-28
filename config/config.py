@@ -71,3 +71,7 @@ EMAILTO = os.getenv("EMAILTO")
 REPORTLOGO = _ini.get("report", "logo", fallback="")
 REPORTTABTITLE = _ini.get("report", "tab_title", fallback="")
 # endregion Report
+
+# region Execution
+RETRIES = _ini.getint("execution", "retries", fallback=0)
+# endregion Execution

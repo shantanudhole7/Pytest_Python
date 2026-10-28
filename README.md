@@ -56,6 +56,7 @@ PytestPython/
 │   ├── page_fixture.py             # login_page, navigate_url, url
 │   ├── api_fixture.py              # api_context, auth, create_product, delete_product
 │   ├── report_fixture.py           # pytest-html title, Environment table, extra columns
+│   ├── retry_fixture.py            # --retries option, retries failed tests after the
 │   └── email_fixture.py            # --send-email option, emails the report after the run
 ├── pages/                          # Page objects
 │   ├── core/                       # Element wrappers: BaseElement, Input, Button, Label, Dialog
@@ -150,6 +151,8 @@ Run every command from the `PytestPython` folder, so pytest picks up `pytest.ini
 | By name                     | `python -m pytest -k "TestProductPage and backpack"`                                                  |
 | Another browser             | `python -m pytest -m ui --web-browser firefox` (`chromium` default, `firefox`, `webkit`)              |
 | Email the report afterwards | `python -m pytest --send-email`                                                                       |
+| Retry failed tests twice    | `python -m pytest --retries 2`                                                                        |
+| No retries for this run     | `python -m pytest --retries 0`                                                                        |
 
 ### Markers
 
@@ -330,6 +333,27 @@ summary table of passed, failed, errors and skipped.
   [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords) and paste the 16 letters,
   without spaces, into `SMTPPASSWORD`.
 - A failed send is logged as `Report email not sent | <reason>` and never changes the test result.
+
+### Retrying failed tests
+
+`fixtures/retry_fixture.py` retries failed tests **after the whole run**, not immediately, and keeps their
+original order. With 10 tests where test 4 fails, the order is 1, 2, 3, 4, 5 … 10, then 4 again.
+
+| Setting                   | Where                                                                   |
+|---------------------------|-------------------------------------------------------------------------|
+| Default number of retries | `retries` under `[execution]` in `config/config.ini` (`0` turns it off) |
+| For one run               | `python -m pytest --retries N`                                          |
+| In CI                     | `PYTEST_ADDOPTS="--retries 2"`                                          |
+
+- While retries are left, a failure is reported as **RERUN** (`R` in the console) instead of FAILED. It is
+  still logged and screenshotted.
+- After the last test, a `RETRY ROUND n` block in the log lists the tests being retried.
+- A test that passes on retry counts as passed; one that fails its last retry counts as **FAILED**.
+- Before each retry round every fixture is torn down, so retried tests get a fresh browser and a fresh API
+  login.
+- The pytest-html report shows first attempts under **Reruns**, and the report email adds a **Reruns** row.
+
+A test that keeps showing up as RERUN is flaky. The final result may be green, but it is worth investigating.
 
 ---
 

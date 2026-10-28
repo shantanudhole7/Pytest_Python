@@ -4,5 +4,6 @@ pytest_plugins = [
     "fixtures.page_fixture",
     "fixtures.report_fixture",
     "fixtures.api_fixture",
-    "fixtures.email_fixture"
+    "fixtures.email_fixture",
+    "fixtures.retry_fixture"
 ]
